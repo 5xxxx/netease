@@ -1,20 +1,21 @@
 /*
  *
  * info.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 2:18 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
 	"net/url"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //更新用户名片。用户名片中包含的用户信息，在群组、聊天室等场景下，会暴露给群组、聊天室内的其他用户。

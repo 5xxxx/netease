@@ -1,3 +1,3 @@
-module github.com/NSObjects/netease-im
+module github.com/NSObjects/netease
 
 go 1.14

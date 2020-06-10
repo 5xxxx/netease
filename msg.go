@@ -1,19 +1,20 @@
 /*
  *
  * msg.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 3:15 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //from	String	是	发送者accid，用户帐号，最大32字符，
@@ -202,21 +203,21 @@ func (n NetEaseIM) SendBatchMsg(msg BatchMsg) (string, error) {
 //forcePushAll	String	否	发群自定义通知时，强推列表是否为群里除发送者外的所有有效成员
 //forcePushList	String	否	发群自定义通知时，强推列表，格式为JSONArray，如"accid1","accid2"
 type AttachMsg struct {
-	FromAccid        string `json:"fromAccid" `
-	ToAccids         string `json:"toAccids" `
-	From             string `json:"from" `
-	Msgtype          int    `json:"msgtype"`
-	To               string `json:"to" `
-	Attach           string `json:"attach" `
-	Pushcontent      string `json:"pushcontent" `
-	Payload          string `json:"payload" `
-	Sound            string `json:"sound" `
-	Save             int    `json:"save" `
-	Option           string `json:"option" `
-	IsForcePush      string `json:"isForcePush" `
-	ForcePushContent string `json:"forcePushContent" `
-	ForcePushAll     string `json:"forcePushAll" `
-	ForcePushList    string `json:"forcePushList" `
+	FromAccid        string   `json:"fromAccid" `
+	ToAccids         []string `json:"toAccids" `
+	From             string   `json:"from" `
+	Msgtype          int      `json:"msgtype"`
+	To               string   `json:"to" `
+	Attach           string   `json:"attach" `
+	Pushcontent      string   `json:"pushcontent" `
+	Payload          string   `json:"payload" `
+	Sound            string   `json:"sound" `
+	Save             int      `json:"save" `
+	Option           string   `json:"option" `
+	IsForcePush      string   `json:"isForcePush" `
+	ForcePushContent string   `json:"forcePushContent" `
+	ForcePushAll     string   `json:"forcePushAll" `
+	ForcePushList    string   `json:"forcePushList" `
 }
 
 //发送自定义系统通知

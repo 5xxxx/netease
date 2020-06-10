@@ -1,20 +1,21 @@
 /*
  *
  * setting.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 2:33 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
 	"net/url"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //设置桌面端在线时，移动端是否需要推送

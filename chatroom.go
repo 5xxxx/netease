@@ -1,20 +1,21 @@
 /*
  *
  * chatroom.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 4:42 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
 	"net/url"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //creator	String	是	聊天室属主的账号accid

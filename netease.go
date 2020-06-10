@@ -1,19 +1,18 @@
 /*
  *
  * nimskd.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 9:51 上午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/encrypt"
-	"github.com/NSObjects/netease-im/path"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -21,6 +20,9 @@ import (
 	"reflect"
 	"strconv"
 	"time"
+
+	"github.com/NSObjects/netease/encrypt"
+	"github.com/NSObjects/netease/path"
 )
 
 type NetEaseIM struct {
@@ -64,7 +66,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Printf(string(respBody))
 	return respBody, nil
 }
 
@@ -74,52 +76,37 @@ func structToMap(i interface{}) (values url.Values) {
 	typ := iVal.Type()
 	for index := 0; index < iVal.NumField(); index++ {
 		f := iVal.Field(index)
+
 		var v string
-		switch f.Interface().(type) {
-		case int, int8, int16, int32, int64:
+
+		switch f.Type().Kind() {
+		case reflect.Int8, reflect.Int, reflect.Int16, reflect.Int32, reflect.Int64:
 			v = strconv.FormatInt(f.Int(), 10)
-		case uint, uint8, uint16, uint32, uint64:
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 			v = strconv.FormatUint(f.Uint(), 10)
-		case float32:
+		case reflect.Float32:
 			v = strconv.FormatFloat(f.Float(), 'f', 4, 32)
-		case float64:
+		case reflect.Float64:
 			v = strconv.FormatFloat(f.Float(), 'f', 4, 64)
-		case []byte:
-			v = string(f.Bytes())
-		case string:
+		case reflect.String:
 			v = f.String()
+		case reflect.Slice:
+			switch f.Interface().(type) {
+			case []byte:
+				v = string(f.Bytes())
+			case []string:
+				b, err := json.Marshal(f.Interface())
+				if err != nil {
+					panic(err)
+				}
+				v = string(b)
+			}
+
 		}
-		values.Set(typ.Field(index).Tag.Get("json"), v)
+		tag := typ.Field(index).Tag.Get("json")
+		values.Set(tag, v)
 	}
 	return
-}
-
-//accid	String	是	网易云通信ID，最大长度32字符，必须保证一个
-//APP内唯一（只允许字母、数字、半角下划线_、 @、半角点以及半角-组成，不区分大小写，
-//会统一小写处理，请注意以此接口返回结果中的accid为准）。
-//name	String	否	网易云通信ID昵称，最大长度64字符。
-//props	String	否	json属性，开发者可选填，最大长度1024字符。该参数已不建议使用。
-//icon	String	否	网易云通信ID头像URL，开发者可选填，最大长度1024
-//token	String	否	网易云通信ID可以指定登录token值，最大长度128字符，
-//并更新，如果未指定，会自动生成token，并在创建成功后返回
-//sign	String	否	用户签名，最大长度256字符
-//email	String	否	用户email，最大长度64字符
-//birth	String	否	用户生日，最大长度16字符
-//mobile	String	否	用户mobile，最大长度32字符，非中国大陆手机号码需要填写国家代码(如美国：+1-xxxxxxxxxx)或地区代码(如香港：+852-xxxxxxxx)
-//gender	int	否	用户性别，0表示未知，1表示男，2女表示女，其它会报参数错误
-//ex	String	否	用户名片扩展字段，最大长度1024字符，用户可自行扩展，建议封装成JSON字符串
-type Account struct {
-	Accid  string `json:"accid" `
-	Name   string `json:"name" `
-	Props  string `json:"props" `
-	Icon   string `json:"icon" `
-	Token  string `json:"token" `
-	Sign   string `json:"sign" `
-	Email  string `json:"email" `
-	Birth  string `json:"birth" `
-	Mobile string `json:"mobile" `
-	Gender int    `json:"gender" `
-	Ex     string `json:"ex" `
 }
 
 var stateCode = map[int]string{

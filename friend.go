@@ -1,20 +1,21 @@
 /*
  *
  * friend.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 2:39 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
 	"net/url"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //accid	    String	是	加好友发起者accid

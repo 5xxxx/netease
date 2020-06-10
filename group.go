@@ -1,19 +1,20 @@
 /*
  *
  * group.go
- * NIMSDK
+ * netease-im
  *
  * Created by lintao on 2020/6/9 4:28 下午
  * Copyright © 2020-2020 LINTAO. All rights reserved.
  *
  */
 
-package NIMSDK
+package netease
 
 import (
-	"github.com/NSObjects/netease-im/path"
 	"encoding/json"
 	"errors"
+
+	"github.com/NSObjects/netease/path"
 )
 
 //tname				String	是	群名称，最大长度64字符
