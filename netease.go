@@ -70,10 +70,11 @@ func (n NetEaseIM) buildHeader() http.Header {
 func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	body := bytes.NewBufferString(params.Encode())
 
+	fmt.Println(url.QueryUnescape(params.Encode()))
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", n.basePath+string(path), body)
 	req.Header = n.buildHeader()
-
+	fmt.Println(req.Header)
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -95,21 +96,44 @@ func structToMap(i interface{}) (values url.Values) {
 	typ := iVal.Type()
 	for index := 0; index < iVal.NumField(); index++ {
 		f := iVal.Field(index)
-
 		var v string
-
 		switch f.Type().Kind() {
 		case reflect.Int8, reflect.Int, reflect.Int16, reflect.Int32, reflect.Int64:
+			//if f.Int() == 0 {
+			//	continue
+			//}
 			v = strconv.FormatInt(f.Int(), 10)
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			//if f.Uint() == 0 {
+			//	continue
+			//}
 			v = strconv.FormatUint(f.Uint(), 10)
 		case reflect.Float32:
+			//if f.Float() == 0 {
+			//	continue
+			//}
 			v = strconv.FormatFloat(f.Float(), 'f', 4, 32)
 		case reflect.Float64:
+			//if f.Float() == 0 {
+			//	continue
+			//}
 			v = strconv.FormatFloat(f.Float(), 'f', 4, 64)
 		case reflect.String:
+			if f.String() == "" {
+				continue
+			}
 			v = f.String()
+		case reflect.Bool:
+
+			if f.Bool() {
+				v = "true"
+			} else {
+				v = "false"
+			}
 		case reflect.Slice:
+			if f.Interface() == nil {
+				continue
+			}
 			switch f.Interface().(type) {
 			case []byte:
 				v = string(f.Bytes())
@@ -118,9 +142,9 @@ func structToMap(i interface{}) (values url.Values) {
 				if err != nil {
 					panic(err)
 				}
+
 				v = string(b)
 			}
-
 		}
 		tag := typ.Field(index).Tag.Get("json")
 		values.Set(tag, v)
