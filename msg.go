@@ -141,17 +141,17 @@ func (n NetEaseIM) SendMsg(msg Msg) (MsgResult, error) {
 //false：不返回消息ID（默认值）
 //true：返回消息ID（toAccids包含的账号数量不可以超过100个）
 type BatchMsg struct {
-	FromAccid   string `json:"fromAccid" `
-	ToAccids    string `json:"toAccids" `
-	Type        int    `json:"type" `
-	Body        string `json:"body"`
-	Option      string `json:"option"`
-	Pushcontent string `json:"pushcontent"`
-	Payload     string `json:"payload"`
-	Ext         string `json:"ext"`
-	Bid         string `json:"bid"`
-	UseYidun    int    `json:"useYidun"`
-	ReturnMsgid bool   `json:"returnMsgid" `
+	FromAccid   string   `json:"fromAccid" `
+	ToAccids    []string `json:"toAccids" `
+	Type        int      `json:"type" `
+	Body        string   `json:"body"`
+	Option      string   `json:"option"`
+	Pushcontent string   `json:"pushcontent"`
+	Payload     string   `json:"payload"`
+	Ext         string   `json:"ext"`
+	Bid         string   `json:"bid"`
+	UseYidun    int      `json:"useYidun"`
+	ReturnMsgid bool     `json:"returnMsgid" `
 }
 
 //批量发送点对点普通消息
