@@ -87,6 +87,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 
 	if n.debug {
 		n.logger.Sugar().Debug(req.Header)
+		defer n.logger.Sync()
 	}
 
 	if err != nil {
@@ -99,7 +100,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 		return nil, err
 	}
 	if n.debug {
-		n.logger.Sugar().Debug(respBody)
+		n.logger.Sugar().Debug(string(respBody))
 	}
 	return respBody, nil
 }
