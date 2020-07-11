@@ -34,6 +34,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -48,10 +49,20 @@ type NetEaseIM struct {
 	appKey   string
 	secret   string
 	basePath string
+	log      log.Logger
+	debug    bool
 }
 
-func NewNetEaseIM(appKey, secret string) NetEaseIM {
-	return NetEaseIM{appKey: appKey, secret: secret, basePath: "https://api.netease.im/nimserver/"}
+func NewNetEaseIM(appKey, secret string) *NetEaseIM {
+	return &NetEaseIM{appKey: appKey, secret: secret, basePath: "https://api.netease.im/nimserver/"}
+}
+
+func (n *NetEaseIM) SetLog(log log.Logger) {
+	n.log = log
+}
+
+func (n *NetEaseIM) SetDebug(b bool) {
+	n.debug = b
 }
 
 func (n NetEaseIM) buildHeader() http.Header {
@@ -74,6 +85,10 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	req.Header = n.buildHeader()
 	resp, err := client.Do(req)
 
+	if n.debug {
+		n.log.Println(req.Header)
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +98,9 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	if n.debug {
+		n.log.Println(string(respBody))
+	}
 	return respBody, nil
 }
 
