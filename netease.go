@@ -34,7 +34,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -43,13 +42,14 @@ import (
 
 	"github.com/NSObjects/netease/encrypt"
 	"github.com/NSObjects/netease/path"
+	"go.uber.org/zap"
 )
 
 type NetEaseIM struct {
 	appKey   string
 	secret   string
 	basePath string
-	log      log.Logger
+	logger   *zap.Logger
 	debug    bool
 }
 
@@ -57,8 +57,8 @@ func NewNetEaseIM(appKey, secret string) *NetEaseIM {
 	return &NetEaseIM{appKey: appKey, secret: secret, basePath: "https://api.netease.im/nimserver/"}
 }
 
-func (n *NetEaseIM) SetLog(log log.Logger) {
-	n.log = log
+func (n *NetEaseIM) SetLog(log *zap.Logger) {
+	n.logger = log
 }
 
 func (n *NetEaseIM) SetDebug(b bool) {
@@ -86,7 +86,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	resp, err := client.Do(req)
 
 	if n.debug {
-		n.log.Println(req.Header)
+		n.logger.Sugar().Debug(req.Header)
 	}
 
 	if err != nil {
@@ -99,7 +99,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 		return nil, err
 	}
 	if n.debug {
-		n.log.Println(string(respBody))
+		n.logger.Sugar().Debug(respBody)
 	}
 	return respBody, nil
 }
