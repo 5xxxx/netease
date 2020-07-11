@@ -102,10 +102,11 @@ func (n NetEaseIM) SendMsg(msg Msg) (MsgResult, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return MsgResult{}, errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return MsgResult{}, errors.New(s)
+		//}
+		return MsgResult{}, errors.New(string(b))
 	}
 
 	return resp.Data, nil
@@ -174,10 +175,11 @@ func (n NetEaseIM) SendBatchMsg(msg BatchMsg) (string, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//	s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(string(b))
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Unregister, nil
@@ -238,10 +240,11 @@ func (n NetEaseIM) SendAttachMsg(msg AttachMsg) error {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return errors.New(string(b))
+		//}
+		return errors.New(string(b))
 	}
 
 	return nil
@@ -265,10 +268,11 @@ func (n NetEaseIM) SendBatchAttachMsg(msg AttachMsg) error {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return errors.New(s)
+		//}
+		return errors.New(string(b))
 	}
 
 	return nil
@@ -303,10 +307,11 @@ func (n NetEaseIM) Upload(file File) (string, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(s)
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Url, nil
@@ -345,10 +350,11 @@ func (n NetEaseIM) CleanNOS(nos Nos) (string, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(s)
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Data.Taskid, nil

@@ -69,10 +69,11 @@ func (n NetEaseIM) CreateAccount(account Account) (string, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(s)
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Info.Token, nil
@@ -100,10 +101,12 @@ func (n NetEaseIM) UpdateAccount(accid, token string) error {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return errors.New(s)
+		//}
+
+		return errors.New(string(b))
 	}
 
 	return nil
@@ -126,10 +129,11 @@ func (n NetEaseIM) RefreshToken(accid string) (string, error) {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(s)
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Info.Token, nil
@@ -158,10 +162,11 @@ func (n NetEaseIM) BlockAccount(accid string, needkick string, kickNotifyExt str
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return "", errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return "", errors.New(s)
+		//}
+		return "", errors.New(string(b))
 	}
 
 	return resp.Info.Token, nil
@@ -184,10 +189,11 @@ func (n NetEaseIM) UnBlockAccount(accid string) error {
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return errors.New(s)
-		}
+		//s, ok := stateCode[resp.Code]
+		//if ok {
+		//	return errors.New(s)
+		//}
+		return errors.New(string(b))
 	}
 
 	return nil
