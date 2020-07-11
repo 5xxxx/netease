@@ -50,7 +50,7 @@ func TestNetEaseIM_CreateAccount(t *testing.T) {
 				secret: Secret,
 			},
 			args: args{Account{
-				Accid: "5e82ddaf7da7a00001c12ef8",
+				Accid: "jsm_sales_session",
 			}},
 			wantErr: false,
 		},

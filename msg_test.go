@@ -33,8 +33,8 @@ func TestNetEaseIM_SendBatchAttachMsg(t *testing.T) {
 		{
 			name: "测试批量发送消息",
 			args: args{AttachMsg{
-				FromAccid: "13802426870",
-				ToAccids:  []string{"15675132016"},
+				FromAccid: "xx",
+				ToAccids:  []string{"xx"},
 				Attach:    "{`heihei`}",
 				Save:      2,
 			}},
@@ -43,12 +43,13 @@ func TestNetEaseIM_SendBatchAttachMsg(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			n := NewNetEaseIM("1823d2e114e071e7670cdd520e76cecf", "8bdf74978155")
+			n := NewNetEaseIM("xx", "xx")
 			if err := n.SendBatchAttachMsg(tt.args.msg); (err != nil) != tt.wantErr {
 				t.Errorf("SendBatchAttachMsg() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
+
 }
 
 func TestNetEaseIM_SendMsg(t *testing.T) {

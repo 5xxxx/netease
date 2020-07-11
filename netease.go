@@ -69,12 +69,9 @@ func (n NetEaseIM) buildHeader() http.Header {
 
 func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	body := bytes.NewBufferString(params.Encode())
-
-	fmt.Println(url.QueryUnescape(params.Encode()))
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", n.basePath+string(path), body)
 	req.Header = n.buildHeader()
-	fmt.Println(req.Header)
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -86,7 +83,7 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf(string(respBody))
+
 	return respBody, nil
 }
 
