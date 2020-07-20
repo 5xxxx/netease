@@ -44,7 +44,7 @@ func TestNetEaseIM_SendBatchAttachMsg(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 
-			n := NewNetEaseIM("14604d847ab89c9b37a5937ff5a53382", "d99d44a9c78e")
+			n := NewNetEaseIM(AppKey, Secret)
 			if err := n.SendBatchAttachMsg(tt.args.msg); (err != nil) != tt.wantErr {
 				t.Errorf("SendBatchAttachMsg() error = %v, wantErr %v", err, tt.wantErr)
 			}

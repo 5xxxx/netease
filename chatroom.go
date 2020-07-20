@@ -30,7 +30,7 @@ type Chatroom struct {
 	Announcement    string `json:"announcement" `
 	Broadcasturl    string `json:"broadcasturl" `
 	Ext             string `json:"ext" `
-	Queuelevel      string `json:"queuelevel" `
+	Queuelevel      int    `json:"queuelevel" `
 	Roomid          int    `json:"roomid"`
 	Valid           bool   `json:"valid"`
 	Muted           bool   `json:"muted"`
@@ -39,36 +39,25 @@ type Chatroom struct {
 }
 
 //创建聊天室
-func (n NetEaseIM) CreateChatroom(room Chatroom) (int, error) {
+func (n NetEaseIM) CreateChatroom(room Chatroom) (Chatroom, error) {
 
 	b, err := n.request(path.ChatRoomCreate, structToMap(room))
 	if err != nil {
-		return 0, err
+		return Chatroom{}, err
 	}
 	var resp struct {
-		Chatroom struct {
-			Roomid       int         `json:"roomid"`
-			Valid        bool        `json:"valid"`
-			Announcement interface{} `json:"announcement"`
-			Name         string      `json:"name"`
-			Broadcasturl string      `json:"broadcasturl"`
-			Ext          string      `json:"ext"`
-			Creator      string      `json:"creator"`
-		} `json:"chatroom"`
-		Code int `json:"code"`
+		Chatroom Chatroom `json:"chatroom"`
+		Code     int      `json:"code"`
 	}
 	if err = json.Unmarshal(b, &resp); err != nil {
-		return 0, err
+		return Chatroom{}, err
 	}
 
 	if resp.Code != 200 {
-		s, ok := stateCode[resp.Code]
-		if ok {
-			return 0, errors.New(s)
-		}
+		return Chatroom{}, errors.New(string(b))
 	}
 
-	return resp.Chatroom.Roomid, nil
+	return resp.Chatroom, nil
 }
 
 //查询聊天室信息
@@ -307,7 +296,7 @@ type ChatroomMsg struct {
 	Roomid                    string `json:"roomid" `
 	MsgId                     string `json:"msgId" `
 	FromAccid                 string `json:"fromAccid" `
-	MsgType                   string `json:"msgType" `
+	MsgType                   int    `json:"msgType" `
 	ResendFlag                int    `json:"resendFlag" `
 	Attach                    string `json:"attach" `
 	Ext                       string `json:"ext" `

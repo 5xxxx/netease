@@ -42,14 +42,13 @@ import (
 
 	"github.com/NSObjects/netease/encrypt"
 	"github.com/NSObjects/netease/path"
-	"go.uber.org/zap"
 )
 
 type NetEaseIM struct {
 	appKey   string
 	secret   string
 	basePath string
-	logger   *zap.Logger
+	logger   Logger
 	debug    bool
 }
 
@@ -57,7 +56,7 @@ func NewNetEaseIM(appKey, secret string) *NetEaseIM {
 	return &NetEaseIM{appKey: appKey, secret: secret, basePath: "https://api.netease.im/nimserver/"}
 }
 
-func (n *NetEaseIM) SetLog(log *zap.Logger) {
+func (n *NetEaseIM) SetLog(log Logger) {
 	n.logger = log
 }
 
@@ -74,7 +73,6 @@ func (n NetEaseIM) buildHeader() http.Header {
 	h.Add("CurTime", t)
 	h.Add("CheckSum", encrypt.GenerateCheckSum(nonce, n.secret, t))
 	h.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-
 	return h
 }
 
@@ -86,8 +84,14 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	resp, err := client.Do(req)
 
 	if n.debug {
-		n.logger.Sugar().Debug(req.Header)
-		defer n.logger.Sync()
+		if n.logger != nil {
+			n.logger.Debugf("netease [body] : %s \n", body.String())
+			n.logger.Debugf("netease [header] : %v \n", req.Header)
+		} else {
+			fmt.Printf("netease [body] : %s \n", body.String())
+			fmt.Printf("netease [header] : %v \n", req.Header)
+		}
+
 	}
 
 	if err != nil {
@@ -100,7 +104,12 @@ func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 		return nil, err
 	}
 	if n.debug {
-		n.logger.Sugar().Debug(string(respBody))
+		if n.logger != nil {
+			n.logger.Debugf("netease [resp] : %s \n", string(respBody))
+		} else {
+			fmt.Printf("netease [resp] : %s \n", string(respBody))
+		}
+
 	}
 	return respBody, nil
 }

@@ -12,19 +12,20 @@ package netease
 
 import (
 	"fmt"
-	"os"
 	"testing"
 )
 
 var (
-	AppKey string
-	Secret string
+	AppKey  string
+	Secret  string
+	netease *NetEaseIM
 )
 
-//测试用的， 大家自己设置环境变量吧
 func init() {
-	AppKey = os.Getenv("app_key")
-	Secret = os.Getenv("secret")
+	AppKey = "xx"
+	Secret = "xx"
+	netease = NewNetEaseIM(AppKey, Secret)
+	netease.debug = true
 }
 
 func TestNetEaseIM_CreateAccount(t *testing.T) {
@@ -90,7 +91,7 @@ func TestNetEaseIM_RefreshToken(t *testing.T) {
 				appKey: AppKey,
 				secret: Secret,
 			},
-			args:    args{accid: "15274894959"},
+			args:    args{accid: "5e82ddaf7da7a00001c12ef8"},
 			wantErr: false,
 		},
 	}
