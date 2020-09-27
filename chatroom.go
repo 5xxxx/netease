@@ -18,6 +18,39 @@ import (
 	"github.com/NSObjects/netease/path"
 )
 
+
+type RobotReq struct {
+	RoomId string   `json:"roomid"`
+	Accids []string `json:"accids"`
+}
+
+type RobotDesc struct {
+	FailAccids    []string `json:failAccids`
+	SuccessAccids []string `json:successAccids`
+}
+
+type RobotRes struct {
+	Code int       `json:code`
+	Desc RobotDesc `json:desc`
+}
+
+func (n NetEaseIM) RemoveRobot(req RobotReq) (RobotDesc, error) {
+	b, err := n.request(path.RemoveRobot, structToMap(req))
+	if err != nil {
+		return RobotDesc{}, err
+	}
+	var resp RobotRes
+
+	if err = json.Unmarshal(b, &resp); err != nil {
+		return RobotDesc{}, err
+	}
+	if resp.Code != 200 {
+		return RobotDesc{}, err
+	}
+	return resp.Desc, nil
+}
+
+
 //creator	String	是	聊天室属主的账号accid
 //name	String	是	聊天室名称，长度限制128个字符
 //announcement	String	否	公告，长度限制4096个字符
