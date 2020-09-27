@@ -33,15 +33,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/NSObjects/netease/encrypt"
+	"github.com/NSObjects/netease/path"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strconv"
 	"time"
-
-	"github.com/NSObjects/netease/encrypt"
-	"github.com/NSObjects/netease/path"
 )
 
 type NetEaseIM struct {
@@ -67,7 +67,8 @@ func (n *NetEaseIM) SetDebug(b bool) {
 func (n NetEaseIM) buildHeader() http.Header {
 	h := http.Header{}
 	nonce := encrypt.RandomString(20)
-	t := fmt.Sprintf("%d", time.Now().Unix())
+	intn := rand.Intn(10)
+	t := fmt.Sprintf("%d", time.Now().Unix()+int64(intn))
 	h.Add("AppKey", n.appKey)
 	h.Add("Nonce", nonce)
 	h.Add("CurTime", t)
@@ -78,17 +79,22 @@ func (n NetEaseIM) buildHeader() http.Header {
 
 func (n NetEaseIM) request(path path.Path, params url.Values) ([]byte, error) {
 	body := bytes.NewBufferString(params.Encode())
+
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", n.basePath+string(path), body)
 	req.Header = n.buildHeader()
 	resp, err := client.Do(req)
 
 	if n.debug {
+		unescape, err := url.QueryUnescape(params.Encode())
+		if err != nil {
+			fmt.Println(err)
+		}
 		if n.logger != nil {
-			n.logger.Debugf("netease [body] : %s \n", body.String())
+			n.logger.Debugf("netease [body] : %s \n", unescape)
 			n.logger.Debugf("netease [header] : %v \n", req.Header)
 		} else {
-			fmt.Printf("netease [body] : %s \n", body.String())
+			fmt.Printf("netease [body] : %s \n", unescape)
 			fmt.Printf("netease [header] : %v \n", req.Header)
 		}
 

@@ -220,16 +220,16 @@ func (n NetEaseIM) SetMemberRole(r MemberRole) error {
 //clienttype	int	否	1:weblink（客户端为web端时使用）; 2:commonlink（客户端为非web端时使用）;3:wechatlink(微信小程序使用), 默认1
 //clientip	String	否	客户端ip，传此参数时，会根据用户ip所在地区，返回合适的地址
 type ChatroomRequest struct {
-	Roomid     string `json:"roomid" `
-	Accid      string `json:"accid" `
-	Clienttype string `json:"clienttype" `
+	Roomid     string `json:"roomid"`
+	Accid      string `json:"accid"`
+	Clienttype int    `json:"clienttype" `
 	Clientip   string `json:"clientip" `
 }
 
 //请求聊天室地址与令牌
 func (n NetEaseIM) RequestAddr(r ChatroomRequest) ([]string, error) {
 
-	b, err := n.request(path.ToggleCloseStat, structToMap(r))
+	b, err := n.request(path.RequestAddr, structToMap(r))
 	if err != nil {
 		return nil, err
 	}
