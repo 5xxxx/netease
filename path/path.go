@@ -61,4 +61,5 @@ const (
 	RequestAddr      Path = "chatroom/requestAddr.action"
 	ChatRoomSendMsg  Path = "chatroom/sendMsg.action"
 	AddRobot         Path = "chatroom/addRobot.action"
+	RemoveRobot      Path = "chatroom/removeRobot.action"
 )
