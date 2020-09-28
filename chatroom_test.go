@@ -12,11 +12,10 @@ package netease
 
 import (
 	"fmt"
-	"math/rand"
+	"go.uber.org/zap"
 	"reflect"
 	"testing"
-
-	"go.uber.org/zap"
+	"math/rand"
 )
 
 func TestNetEaseIM_AddRobot(t *testing.T) {
@@ -398,4 +397,5 @@ func TestNetEaseIM_RequestAddr1(t *testing.T) {
 			}
 		})
 	}
+
 }
