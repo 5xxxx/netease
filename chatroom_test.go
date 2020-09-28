@@ -12,13 +12,10 @@ package netease
 
 import (
 	"fmt"
-	"math/rand"
-	"reflect"
 	"testing"
-
-	"go.uber.org/zap"
 )
 
+/*
 func TestNetEaseIM_AddRobot(t *testing.T) {
 	type fields struct {
 		appKey   string
@@ -353,4 +350,18 @@ func TestNetEaseIM_UpdateChatroom(t *testing.T) {
 			}
 		})
 	}
+}
+*/
+
+func TestNetEaseIM_RemoveRobot(t *testing.T) {
+	r := RobotReq{
+		Accids: []string{"123"},
+		RoomId: "123123",
+	}
+	m:=make(map[string]interface{})
+	m["accids"] = []string{"123"}
+	m["roomId"] = "23123"
+
+	fmt.Println(structToMap(r))
+	fmt.Println(m)
 }
