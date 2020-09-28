@@ -12,10 +12,12 @@ package netease
 
 import (
 	"fmt"
+	"go.uber.org/zap"
+	"reflect"
 	"testing"
+	"math/rand"
 )
 
-/*
 func TestNetEaseIM_AddRobot(t *testing.T) {
 	type fields struct {
 		appKey   string
@@ -351,7 +353,6 @@ func TestNetEaseIM_UpdateChatroom(t *testing.T) {
 		})
 	}
 }
-*/
 
 func TestNetEaseIM_RemoveRobot(t *testing.T) {
 	r := RobotReq{
