@@ -30,7 +30,7 @@ type RobotDesc struct {
 
 type RobotRes struct {
 	Code int       `json:"code"`
-	desc RobotDesc `json:"desc"`
+	Desc RobotDesc `json:"desc"`
 }
 
 func (n NetEaseIM) RemoveRobot(req RobotReq) (RobotRes, error) {
