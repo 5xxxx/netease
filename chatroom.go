@@ -24,8 +24,8 @@ type RobotReq struct {
 }
 
 type RobotDesc struct {
-	FailAccids    []string `json:"failAccids"`
-	SuccessAccids []string `json:"successAccids"`
+	FailAccids    string `json:"failAccids"`
+	SuccessAccids string `json:"successAccids"`
 }
 
 type RobotRes struct {

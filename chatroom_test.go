@@ -13,9 +13,9 @@ package netease
 import (
 	"fmt"
 	"go.uber.org/zap"
+	"math/rand"
 	"reflect"
 	"testing"
-	"math/rand"
 )
 
 func TestNetEaseIM_AddRobot(t *testing.T) {
@@ -359,7 +359,7 @@ func TestNetEaseIM_RemoveRobot(t *testing.T) {
 		Accids: []string{"123"},
 		RoomId: "123123",
 	}
-	m:=make(map[string]interface{})
+	m := make(map[string]interface{})
 	m["accids"] = []string{"123"}
 	m["roomId"] = "23123"
 
