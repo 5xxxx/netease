@@ -13,9 +13,9 @@ package netease
 import (
 	"fmt"
 	"go.uber.org/zap"
-	"math/rand"
 	"reflect"
 	"testing"
+	"math/rand"
 )
 
 func TestNetEaseIM_AddRobot(t *testing.T) {
@@ -354,15 +354,48 @@ func TestNetEaseIM_UpdateChatroom(t *testing.T) {
 	}
 }
 
-func TestNetEaseIM_RemoveRobot(t *testing.T) {
-	r := RobotReq{
-		Accids: []string{"123"},
-		RoomId: "123123",
+func TestNetEaseIM_RequestAddr1(t *testing.T) {
+	type fields struct {
+		appKey   string
+		secret   string
+		basePath string
+		logger   Logger
+		debug    bool
 	}
-	m := make(map[string]interface{})
-	m["accids"] = []string{"123"}
-	m["roomId"] = "23123"
+	type args struct {
+		r ChatroomRequest
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    []string
+		wantErr bool
+	}{
+		{
+			name: "获取聊天室地址",
+			args: args{ChatroomRequest{
+				Roomid:     "206703475",
+				Accid:      "5f1be09341329c000167660a",
+				Clienttype: 1,
+			}},
+			want:    nil,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			n := NewNetEaseIM(AppKey, Secret)
+			n.SetDebug(true)
+			got, err := n.RequestAddr(tt.args.r)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("RequestAddr() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("RequestAddr() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
 
-	fmt.Println(structToMap(r))
-	fmt.Println(m)
 }
