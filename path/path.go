@@ -49,7 +49,7 @@ const (
 	FileUpload         Path = "msg/fileUpload.action"
 	NOSClean           Path = "job/nos/del.action"
 	Recall             Path = "msg/recall.action"
-	SendBroadcastMsg   Path = "/msg/broadcastMsg.action"
+	SendBroadcastMsg   Path = "msg/broadcastMsg.action"
 )
 
 const (
