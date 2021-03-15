@@ -46,7 +46,7 @@ func (n NetEaseIM) UpdateUinfo(account Account) error {
 //accids	String	是	用户帐号（例如：JSONArray对应的accid串，如：["zhangsan"]，如果解析出错，会报414）（一次查询最多为200）
 func (n NetEaseIM) GetUinfo(accids string) ([]Account, error) {
 	params := url.Values{}
-	params.Set("accids", accids)
+	params.Set("accids", "[\""+accids+"\"]")
 
 	b, err := n.request(path.GetUinfos, params)
 	if err != nil {
