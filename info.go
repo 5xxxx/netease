@@ -47,6 +47,7 @@ func (n NetEaseIM) UpdateUinfo(account Account) error {
 func (n NetEaseIM) GetUinfo(accids string) ([]Account, error) {
 	params := url.Values{}
 	params.Set("accids", "[\""+accids+"\"]")
+
 	b, err := n.request(path.GetUinfos, params)
 	if err != nil {
 		return nil, err

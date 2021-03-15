@@ -22,8 +22,14 @@ var (
 )
 
 func init() {
-	AppKey = "xx"
-	Secret = "xx"
+	//[netease]
+	//	app_key = "9621ea9ebe9eb44d33e6c77c0a9388d2"
+	//	secret  = "13bbb5f96435"
+	//[netease]
+	//	app_key = "14604d847ab89c9b37a5937ff5a53382"
+	//	secret  = "d99d44a9c78e"
+	AppKey = "14604d847ab89c9b37a5937ff5a53382"
+	Secret = "d99d44a9c78e"
 	netease = NewNetEaseIM(AppKey, Secret)
 	netease.debug = true
 }

@@ -12,10 +12,11 @@ package netease
 
 import (
 	"fmt"
-	"go.uber.org/zap"
+	"math/rand"
 	"reflect"
 	"testing"
-	"math/rand"
+
+	"go.uber.org/zap"
 )
 
 func TestNetEaseIM_AddRobot(t *testing.T) {
@@ -283,35 +284,33 @@ func TestNetEaseIM_SetMemberRole(t *testing.T) {
 }
 
 func TestNetEaseIM_ToggleCloseStat(t *testing.T) {
-	type fields struct {
-		appKey   string
-		secret   string
-		basePath string
-		logger   *zap.Logger
-		debug    bool
-	}
+
 	type args struct {
 		roomid   string
 		operator string
 		valid    string
 	}
 	tests := []struct {
-		name    string
-		fields  fields
+		name string
+
 		args    args
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "关闭直播间",
+
+			args: args{
+				roomid:   "263324649",
+				operator: "5fd70f68b3bf306104d277ed",
+				valid:    "false",
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			n := NetEaseIM{
-				appKey:   tt.fields.appKey,
-				secret:   tt.fields.secret,
-				basePath: tt.fields.basePath,
-
-				debug: tt.fields.debug,
-			}
+			n := NewNetEaseIM(AppKey, Secret)
+			n.SetDebug(true)
 			if err := n.ToggleCloseStat(tt.args.roomid, tt.args.operator, tt.args.valid); (err != nil) != tt.wantErr {
 				t.Errorf("ToggleCloseStat() error = %v, wantErr %v", err, tt.wantErr)
 			}
