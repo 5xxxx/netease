@@ -18,10 +18,59 @@ import (
 	"github.com/NSObjects/netease/path"
 )
 
+//RoomId		long	是	聊天室id
+//Notify		int			需要查询的成员类型,0:固定成员;1:非固定成员;2:仅返回在线的固定成员
+//Endtime		long		单位毫秒，按时间倒序最后一个成员的时间戳,0表示系统当前时间
+//Limit			long		返回条数，<=100
+//Accids		array       机器人账号accid列表，必须是有效账号，账号数量上限100个
+//Type			int         需要查询的成员类型,0:固定成员;1:非固定成员;2:仅返回在线的固定成员
 type RobotReq struct {
-	RoomId string   `json:"roomid"`
-	Notify bool     `json:"notify"`
-	Accids []string `json:"accids"`
+	RoomId  string   `json:"roomid"`
+	Notify  bool     `json:"notify,omitempty"`
+	Accids  []string `json:"accids,omitempty"`
+	Type    int      `json:"type,omitempty"`
+	Endtime int      `json:"endtime,omitempty"`
+	Limit   int      `json:"limit,omitempty"`
+}
+
+type ChatRoomMemberResp struct {
+	Desc struct {
+		Data []ChatRoomMember `json:"data"`
+	} `json:"desc"`
+	Code int `json:"code"`
+}
+
+//roomid		long	聊天室id
+//accid			String	用户accid
+//nick			String	聊天室内的昵称
+//avator	    String	聊天室内的头像
+//ext		    String	开发者扩展字段
+//type		    String	角色类型UNSET(未设置),LIMITED(受限用户，黑名单或禁言)COMMON(普通固定成员)CREATOR（创建者),MANAGER(管理员),TEMPORARY（临时用户,非固定成员）
+//level		    int		成员级别（若未设置成员级别，则无此字段）
+//onlineStat	Boolean	是否在线
+//enterTime		long	进入聊天室的时间点
+//blacklisted	Boolean	是否在黑名单中（若未被拉黑，则无此字段）
+//muted			Boolean	是否被禁言（若未被禁言，则无此字段）
+//tempMuted		Boolean	是否被临时禁言（若未被临时禁言，则无此字段）
+//tempMuteTtl	long	临时禁言的解除时长,单位秒（若未被临时禁言，则无此字段）
+//isRobot		Boolean	是否是聊天室机器人（若不是机器人，则无此字段）
+//robotExpirAt	int		机器人失效的时长，单位秒（若不是机器人，则无此字段
+type ChatRoomMember struct {
+	Roomid       int    `json:"roomid"`
+	Accid        string `json:"accid"`
+	Nick         string `json:"nick"`
+	Avator       string `json:"avator"`
+	Ext          string `json:"ext"`
+	Type         string `json:"type"`
+	Level        int    `json:"level"`
+	Onlinestat   bool   `json:"onlineStat"`
+	Entertime    int64  `json:"enterTime"`
+	Blacklisted  bool   `json:"blacklisted"`
+	Muted        bool   `json:"muted"`
+	Tempmuted    bool   `json:"tempMuted"`
+	Tempmutettl  int    `json:"tempMuteTtl"`
+	Isrobot      bool   `json:"isRobot"`
+	Robotexpirat int    `json:"robotExpirAt"`
 }
 
 type RobotDesc struct {
@@ -72,6 +121,27 @@ func (n NetEaseIM) CleanRobot(req RobotReq) (RobotRes, error) {
 		}
 	}
 	return RobotRes{}, nil
+}
+
+//ListChatRoomMember
+//分页获取成员列表
+func (n NetEaseIM) ListChatRoomMember(req RobotReq) ([]ChatRoomMember, error) {
+	b, err := n.request(path.ListChatRoomMember, structToMap(req))
+	if err != nil {
+		return nil, err
+	}
+	var resp ChatRoomMemberResp
+
+	if err = json.Unmarshal(b, &resp); err != nil {
+		return nil, err
+	}
+	if resp.Code != 200 {
+		s, ok := stateCode[resp.Code]
+		if ok {
+			return nil, errors.New(s)
+		}
+	}
+	return resp.Desc.Data, nil
 }
 
 //creator	String	是	聊天室属主的账号accid

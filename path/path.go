@@ -53,15 +53,16 @@ const (
 )
 
 const (
-	ChatRoomCreate   Path = "chatroom/create.action"
-	GetChatRoom      Path = "chatroom/get.action"
-	GetBatchChatRoom Path = "chatroom/getBatch.action "
-	UpdateChatRoom   Path = "chatroom/update.action"
-	ToggleCloseStat  Path = "chatroom/toggleCloseStat.action"
-	SetMemberRole    Path = "chatroom/setMemberRole.action"
-	RequestAddr      Path = "chatroom/requestAddr.action"
-	ChatRoomSendMsg  Path = "chatroom/sendMsg.action"
-	AddRobot         Path = "chatroom/addRobot.action"
-	RemoveRobot      Path = "chatroom/removeRobot.action"
-	CleanRobot   	 Path = "chatroom/cleanRobot.action"
+	ChatRoomCreate     Path = "chatroom/create.action"
+	GetChatRoom        Path = "chatroom/get.action"
+	GetBatchChatRoom   Path = "chatroom/getBatch.action "
+	UpdateChatRoom     Path = "chatroom/update.action"
+	ToggleCloseStat    Path = "chatroom/toggleCloseStat.action"
+	SetMemberRole      Path = "chatroom/setMemberRole.action"
+	RequestAddr        Path = "chatroom/requestAddr.action"
+	ChatRoomSendMsg    Path = "chatroom/sendMsg.action"
+	AddRobot           Path = "chatroom/addRobot.action"
+	RemoveRobot        Path = "chatroom/removeRobot.action"
+	CleanRobot         Path = "chatroom/cleanRobot.action"
+	ListChatRoomMember Path = "chatroom/membersByPage.action"
 )
