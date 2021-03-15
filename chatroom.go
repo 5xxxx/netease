@@ -20,6 +20,7 @@ import (
 
 type RobotReq struct {
 	RoomId string   `json:"roomid"`
+	Notify bool     `json:"notify"`
 	Accids []string `json:"accids"`
 }
 
@@ -35,6 +36,27 @@ type RobotRes struct {
 
 func (n NetEaseIM) RemoveRobot(req RobotReq) (RobotRes, error) {
 	b, err := n.request(path.RemoveRobot, structToMap(req))
+	if err != nil {
+		return RobotRes{}, err
+	}
+	var resp RobotRes
+
+	if err = json.Unmarshal(b, &resp); err != nil {
+		return RobotRes{}, err
+	}
+	if resp.Code != 200 {
+		s, ok := stateCode[resp.Code]
+		if ok {
+			return RobotRes{}, errors.New(s)
+		}
+	}
+	return RobotRes{}, nil
+}
+
+//CleanRobot
+// 清空聊天室机器人
+func (n NetEaseIM) CleanRobot(req RobotReq) (RobotRes, error) {
+	b, err := n.request(path.CleanRobot, structToMap(req))
 	if err != nil {
 		return RobotRes{}, err
 	}
