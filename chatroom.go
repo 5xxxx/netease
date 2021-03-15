@@ -29,7 +29,7 @@ type RobotReq struct {
 	Notify  bool     `json:"notify,omitempty"`
 	Accids  []string `json:"accids,omitempty"`
 	Type    int      `json:"type,omitempty"`
-	Endtime int      `json:"endtime,omitempty"`
+	Endtime int64    `json:"endtime,omitempty"`
 	Limit   int      `json:"limit,omitempty"`
 }
 
