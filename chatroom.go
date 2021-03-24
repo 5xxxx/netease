@@ -19,7 +19,7 @@ import (
 )
 
 //RoomId		long	是	聊天室id
-//Notify		int			需要查询的成员类型,0:固定成员;1:非固定成员;2:仅返回在线的固定成员
+//Notify		int
 //Endtime		long		单位毫秒，按时间倒序最后一个成员的时间戳,0表示系统当前时间
 //Limit			long		返回条数，<=100
 //Accids		array       机器人账号accid列表，必须是有效账号，账号数量上限100个
@@ -28,9 +28,9 @@ type RobotReq struct {
 	RoomId  string   `json:"roomid"`
 	Notify  bool     `json:"notify,omitempty"`
 	Accids  []string `json:"accids,omitempty"`
-	Type    int      `json:"type,omitempty"`
-	Endtime int64    `json:"endtime,omitempty"`
-	Limit   int      `json:"limit,omitempty"`
+	Type    int      `json:"type"`
+	Endtime int64    `json:"endtime"`
+	Limit   int      `json:"limit"`
 }
 
 type ChatRoomMemberResp struct {
