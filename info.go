@@ -15,7 +15,7 @@ import (
 	"errors"
 	"net/url"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //更新用户名片。用户名片中包含的用户信息，在群组、聊天室等场景下，会暴露给群组、聊天室内的其他用户。

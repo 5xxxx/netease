@@ -15,7 +15,7 @@ import (
 	"errors"
 	"net/url"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //accid	    String	是	加好友发起者accid

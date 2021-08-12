@@ -15,7 +15,7 @@ import (
 	"errors"
 	"net/url"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //accid	String	是	网易云通信ID，最大长度32字符，必须保证一个

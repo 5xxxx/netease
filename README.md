@@ -11,7 +11,7 @@ netease是对网易云信服务端API进行封装，netease已经在线上环境
 ```
 import (
 	"fmt"
-	"github.com/NSObjects/netease"
+	"github.com/5xxxx/netease"
 )
 
 func main() {
@@ -31,4 +31,4 @@ func main() {
 
 ## License
 
-[Apache License 2.0](https://github.com/NSObjects/netease-im/blob/master/LICENSE)
+[Apache License 2.0](https://github.com/5xxxx/netease-im/blob/master/LICENSE)

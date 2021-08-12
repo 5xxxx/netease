@@ -15,7 +15,7 @@ import (
 	"errors"
 	"net/url"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //设置桌面端在线时，移动端是否需要推送

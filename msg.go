@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //from	String	是	发送者accid，用户帐号，最大32字符，

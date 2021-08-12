@@ -15,7 +15,7 @@ import (
 	"errors"
 	"net/url"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //RoomId		long	是	聊天室id

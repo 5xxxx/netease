@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/path"
 )
 
 //tname				String	是	群名称，最大长度64字符

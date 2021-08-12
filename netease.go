@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/NSObjects/netease"
+	"github.com/5xxxx/netease"
 )
 
 func main() {
@@ -33,8 +33,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/NSObjects/netease/encrypt"
-	"github.com/NSObjects/netease/path"
+	"github.com/5xxxx/netease/encrypt"
+	"github.com/5xxxx/netease/path"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
